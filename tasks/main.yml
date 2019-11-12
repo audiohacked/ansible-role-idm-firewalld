@@ -1,0 +1,93 @@
+---
+# tasks file for idm
+- name: SSH FirewallD configuration
+  firewalld:
+    permanent: yes
+    immediate: yes
+    port: "{{ item }}"
+    state: enabled
+  with_items:
+    - "22/tcp"
+  tags:
+    - idm
+    - firewall
+
+- name: HTTP/HTTPS FirewallD configuration
+  firewalld:
+    permanent: yes
+    immediate: yes
+    port: "{{ item }}"
+    state: enabled
+  with_items:
+    - "80/tcp"
+    - "443/tcp"
+  tags:
+      - idm
+      - firewall
+
+- name: LDAP/LDAPS FirewallD configuration
+  firewalld:
+    permanent: yes
+    immediate: yes
+    port: "{{ item }}"
+    state: enabled
+  with_items:
+    - "389/tcp"
+    - "636/tcp"
+  tags:
+    - idm
+    - firewall
+
+- name: Kerberos FirewallD configuration
+  firewalld:
+    permanent: yes
+    immediate: yes
+    port: "{{ item }}"
+    state: enabled
+  with_items:
+    - "88/tcp"
+    - "88/udp"
+    - "464/tcp"
+    - "464/udp"
+  tags:
+    - idm
+    - firewall
+
+- name: DNS FirewallD configuration
+  firewalld:
+    permanent: yes
+    immediate: yes
+    port: "{{ item }}"
+    state: enabled
+  with_items:
+    - "53/tcp"
+    - "53/udp"
+  tags:
+    - idm
+    - firewall
+
+- name: NTP FirewallD configuration
+  firewalld:
+    permanent: yes
+    immediate: yes
+    port: "{{ item }}"
+    state: enabled
+  with_items:
+    - "123/udp"
+  tags:
+    - idm
+    - firewall
+
+- name: FirewallD services configuration
+  firewalld:
+    permanent: yes
+    immediate: yes
+    service: "{{ item }}"
+    state: enabled
+  with_items:
+    - freeipa-ldap
+    - freeipa-ldaps
+    - dns
+  tags:
+    - idm
+    - firewall
